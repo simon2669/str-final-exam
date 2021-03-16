@@ -1,0 +1,23 @@
+.relativdoboz {
+  position: relative;
+}
+.kerdes {
+  padding: 1.5rem;
+  position: sticky;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  width: 50vw;
+  height: 50vh;
+  background-color: #252121;
+  color: white;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  // @media screen and (max-width: 600px) {
+
+  // }
+}

@@ -1,45 +1,43 @@
 <div class="row">
   <div *ngIf="user$ | async as user" class="col-6 offset-3 mt-3">
     <h2>Update / Create User</h2>
-    <form #userForm="ngForm">
+    <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
       <input name="id" type="hidden" [(ngModel)]="user.id">
       <div class="form-group">
-        <label>Name</label>
+        <label for="name">Name</label>
         <!-- Validation: min 8 char, max 40 char, required -->
-        <input
-        class="form-control"
-        type="text"
-        name="name"
-        [(ngModel)]="user.name">
+        <input class="form-control" type="text" name="name" id="name" [(ngModel)]="user.name" required #name="ngModel"
+          pattern="[a-zöüóőúéáűíA-ZÖÜÓŐÚÉÁŰÍ ]{8,40}">
+        <p class="text-danger" *ngIf="name.invalid &&name.touched">A név mező minimum 8 és maximim 40 karakterből kell ,
+          hogy álljon.
+        </p>
       </div>
       <div class="form-group">
-        <label>Email</label>
+        <label for="email">Email</label>
         <!-- Validation: valid email, required.
           Help: https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript -->
-          <input
-          class="form-control"
-          type="text"
-          name="email"
-          [(ngModel)]="user.email">
-        </div>
-        <div class="form-group">
-          <label>Address</label>
-          <!-- Validation: min 8 char, max 100 char, required -->
-          <input
-          class="form-control"
-          type="text"
-          name="address"
-          [(ngModel)]="user.address">
+        <input class="form-control" type="text" id="email" name="email" [(ngModel)]="user.email" required email
+          #email="ngModel">
+        <p class="text-danger" *ngIf="email.invalid && email.touched">Kérem adja meg a valós email címét!
+        </p>
       </div>
       <div class="form-group">
-        <label>Active</label>
+        <label for="address">Address</label>
+        <!-- Validation: min 8 char, max 100 char, required -->
+        <input class="form-control" type="text" id="address" name="address" [(ngModel)]="user.address" required
+          pattern="[a-zöüóőúéáűíA-ZÖÜÓŐÚÉÁŰÍ0-9 ]{8,100}" #address="ngModel">
+        <p class="text-danger" *ngIf="address.invalid && address.touched">Kérem adja meg a valós címét!
+        </p>
+      </div>
+      <div class="form-group">
+        <label for="active">Active</label>
         <!-- No validation. -->
-        <select [(ngModel)]="user.active" name="active" class="form-control">
+        <select [(ngModel)]="user.active" id="active" name="active" class="form-control">
           <option [ngValue]="true">active</option>
           <option [ngValue]="false">inactive</option>
         </select>
       </div>
-      <button type="submit" class="btn btn-primary btn-block mt-5">
+      <button [disabled]="userForm.invalid" type="submit" class="btn btn-primary btn-block mt-5">
         <i class="fa fa-save"></i>
       </button>
     </form>
